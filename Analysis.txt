@@ -1,0 +1,63 @@
+============================================================
+RESULTS SUMMARY
+============================================================
+
+US-SOUTH1 - /register:
+  Average Latency: 202.24ms
+  Total Requests:  10
+
+EUROPE-WEST1 - /register:
+  Average Latency: 847.62ms
+  Total Requests:  10
+
+US-SOUTH1 - /list:
+  Average Latency: 176.49ms
+  Total Requests:  10
+
+EUROPE-WEST1 - /list:
+  Average Latency: 396.90ms
+  Total Requests:  10
+
+
+============================================================
+EVENTUAL CONSISTENCY REPORT
+(US-SOUTH1 -> EUROPE-WEST1)
+============================================================
+
+Total Registrations:     100
+Registration Failures:   0
+
+Found Immediately:       100 (100.0%)
+Found with Delay:        0 (0.0%)
+Not Found:               0 (0.0%)
+
+Replication Delay Statistics (for found entries):
+  Average Delay: 0ms
+  Min Delay:     0ms
+  Max Delay:     0ms
+
+Eventual Consistency Rate: 100.0%
+(percentage of users eventually found in remote instance)
+
+============================================================
+EVENTUAL CONSISTENCY REPORT
+(EUROPE-WEST1 -> US-SOUTH1)
+============================================================
+
+Total Registrations:     100
+Registration Failures:   0
+
+Found Immediately:       100 (100.0%)
+Found with Delay:        0 (0.0%)
+Not Found:               0 (0.0%)
+
+Replication Delay Statistics (for found entries):
+  Average Delay: 0ms
+  Min Delay:     0ms
+  Max Delay:     0ms
+
+Eventual Consistency Rate: 100.0%
+(percentage of users eventually found in remote instance)
+
+
+The server in US-SOUTH1 had a lot lower average latency compared to the server in EUROPE-WEST1. This makes sense because of the increased transmission time due to the distance between the US and Europe being a lot larger. I tested consistency both ways (registering in SOUTH and listing in EUROPE and the other way around) but both tests yielded a 100% immediate consistency rate, which was somewhat surprising. Firestore is designed to replicate fast and Python is a fairly slow language so that could be one of the reasons. I think because I used US-SOUTH instead of US-CENTRAL, the distance there might also be the factor. I had to use US-SOUTH because E2-micro servers weren't avaialbe in US-CENTRAL at the time I did this assignment. Overall, Firestore offers pretty fast eventual consistency from my evaluation results.
